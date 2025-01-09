@@ -13,4 +13,5 @@ See the script `load.py` which scrapes wiki articles and stores it in Postgres. 
 
 ## PromptQL setup
 
-See the PromptQL project in `my-assistant/` directory
+1. See the PromptQL project in `my-assistant/` directory
+2. Run it via `ddn run docker-start`
