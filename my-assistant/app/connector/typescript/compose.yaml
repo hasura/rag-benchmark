@@ -1,0 +1,14 @@
+services:
+  app_typescript:
+    build:
+      context: .
+      dockerfile: .hasura-connector/Dockerfile
+    environment:
+      HASURA_SERVICE_TOKEN_SECRET: $APP_TYPESCRIPT_HASURA_SERVICE_TOKEN_SECRET
+      OTEL_EXPORTER_OTLP_ENDPOINT: $APP_TYPESCRIPT_OTEL_EXPORTER_OTLP_ENDPOINT
+      OTEL_SERVICE_NAME: $APP_TYPESCRIPT_OTEL_SERVICE_NAME
+      OPENAI_API_KEY: $OPENAI_API_KEY
+    extra_hosts:
+      - local.hasura.dev:host-gateway
+    ports:
+      - 4025:8080

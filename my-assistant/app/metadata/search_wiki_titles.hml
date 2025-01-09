@@ -1,0 +1,121 @@
+# ---
+# kind: ObjectType
+# version: v1
+# definition:
+#   name: search_wiki_titles
+#   fields:
+#     - name: content
+#       type: text
+#     - name: id
+#       type: int4
+#     - name: title
+#       type: varchar
+#   graphql:
+#     typeName: search_wiki_titles
+#     inputTypeName: search_wiki_titles_input
+#   dataConnectorTypeMapping:
+#     - dataConnectorName: mypostgres
+#       dataConnectorObjectType: search_wiki_titles
+
+# ---
+# kind: TypePermissions
+# version: v1
+# definition:
+#   typeName: search_wiki_titles
+#   permissions:
+#     - role: admin
+#       output:
+#         allowedFields:
+#           - content
+#           - id
+#           - title
+
+# ---
+# kind: BooleanExpressionType
+# version: v1
+# definition:
+#   name: search_wiki_titles_bool_exp
+#   operand:
+#     object:
+#       type: search_wiki_titles
+#       comparableFields:
+#         - fieldName: content
+#           booleanExpressionType: text_bool_exp
+#         - fieldName: id
+#           booleanExpressionType: int4_bool_exp
+#         - fieldName: title
+#           booleanExpressionType: varchar_bool_exp
+#       comparableRelationships: []
+#   logicalOperators:
+#     enable: true
+#   isNull:
+#     enable: true
+#   graphql:
+#     typeName: search_wiki_titles_bool_exp
+
+# ---
+# kind: AggregateExpression
+# version: v1
+# definition:
+#   name: search_wiki_titles_agg_exp
+#   operand:
+#     object:
+#       aggregatedType: search_wiki_titles
+#       aggregatableFields:
+#         - fieldName: content
+#           aggregateExpression: text_agg_exp
+#         - fieldName: id
+#           aggregateExpression: int4_agg_exp
+#         - fieldName: title
+#           aggregateExpression: varchar_agg_exp
+#   count:
+#     enable: true
+#   graphql:
+#     selectTypeName: search_wiki_titles_agg_exp
+
+# ---
+# kind: Model
+# version: v1
+# definition:
+#   description: "Use for getting wikipedia articles with certain keywords in the title"
+#   name: search_wiki_titles
+#   objectType: search_wiki_titles
+#   arguments:
+#     - name: search_term
+#       type: text!
+#       description: "Give keywords to find in the title"
+#   source:
+#     dataConnectorName: mypostgres
+#     collection: search_wiki_titles
+#   filterExpressionType: search_wiki_titles_bool_exp
+#   aggregateExpression: search_wiki_titles_agg_exp
+#   orderableFields:
+#     - fieldName: content
+#       orderByDirections:
+#         enableAll: true
+#     - fieldName: id
+#       orderByDirections:
+#         enableAll: true
+#     - fieldName: title
+#       orderByDirections:
+#         enableAll: true
+#   graphql:
+#     selectMany:
+#       queryRootField: search_wiki_titles
+#     selectUniques: []
+#     argumentsInputType: search_wiki_titles_arguments
+#     orderByExpressionType: search_wiki_titles_order_by
+#     filterInputTypeName: search_wiki_titles_filter_input
+#     aggregate:
+#       queryRootField: search_wiki_titles_aggregate
+
+# ---
+# kind: ModelPermissions
+# version: v1
+# definition:
+#   modelName: search_wiki_titles
+#   permissions:
+#     - role: admin
+#       select:
+#         filter: null
+

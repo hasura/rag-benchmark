@@ -1,0 +1,62 @@
+# ---
+# kind: ObjectType
+# version: v1
+# definition:
+#   name: SearchResult
+#   fields:
+#     - name: articleId
+#       type: Int!
+#     - name: chunkContent
+#       type: String!
+#     - name: similarity
+#       type: Float!
+#   graphql:
+#     typeName: SearchResult
+#     inputTypeName: SearchResult_input
+#   dataConnectorTypeMapping:
+#     - dataConnectorName: typescript
+#       dataConnectorObjectType: SearchResult
+
+# ---
+# kind: TypePermissions
+# version: v1
+# definition:
+#   typeName: SearchResult
+#   permissions:
+#     - role: admin
+#       output:
+#         allowedFields:
+#           - articleId
+#           - chunkContent
+#           - similarity
+
+# ---
+# kind: Command
+# version: v1
+# definition:
+#   description: "Search for semantically similar content in the wikipedia knowledge base to help answer questions."
+#   name: search_wikipedia
+#   outputType: "[SearchResult!]!"
+#   arguments:
+#     - name: query
+#       type: String!
+#       description: "The search query to find relevant content"
+#     # - name: topK
+#     #   type: Int
+#   source:
+#     dataConnectorName: typescript
+#     dataConnectorCommand:
+#       function: searchSimilarContent
+#   graphql:
+#     rootFieldName: search_wikipedia
+#     rootFieldKind: Query
+
+# ---
+# kind: CommandPermissions
+# version: v1
+# definition:
+#   commandName: search_wikipedia
+#   permissions:
+#     - role: admin
+#       allowExecution: true
+

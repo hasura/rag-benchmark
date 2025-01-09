@@ -1,0 +1,27 @@
+kind: Subgraph
+version: v2
+definition:
+  name: app
+  generator:
+    rootPath: .
+    namingConvention: none
+  includePaths:
+    - metadata
+  envMapping:
+    APP_MYPOSTGRES_AUTHORIZATION_HEADER:
+      fromEnv: APP_MYPOSTGRES_AUTHORIZATION_HEADER
+    APP_MYPOSTGRES_READ_URL:
+      fromEnv: APP_MYPOSTGRES_READ_URL
+    APP_MYPOSTGRES_WRITE_URL:
+      fromEnv: APP_MYPOSTGRES_WRITE_URL
+    APP_TYPESCRIPT_AUTHORIZATION_HEADER:
+      fromEnv: APP_TYPESCRIPT_AUTHORIZATION_HEADER
+    APP_TYPESCRIPT_READ_URL:
+      fromEnv: APP_TYPESCRIPT_READ_URL
+    APP_TYPESCRIPT_WRITE_URL:
+      fromEnv: APP_TYPESCRIPT_WRITE_URL
+  connectors:
+    - path: connector/mypostgres/connector.yaml
+      connectorLinkName: mypostgres
+    - path: connector/typescript/connector.yaml
+      connectorLinkName: typescript

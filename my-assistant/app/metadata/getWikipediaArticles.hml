@@ -1,0 +1,63 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: WikiArticleSearchResult
+  fields:
+    - name: content
+      type: String!
+    - name: id
+      type: Int!
+    - name: similarity
+      type: Float!
+    - name: title
+      type: String!
+  graphql:
+    typeName: WikiArticleSearchResult
+    inputTypeName: WikiArticleSearchResult_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: typescript
+      dataConnectorObjectType: WikiArticleSearchResult
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: WikiArticleSearchResult
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - content
+          - id
+          - similarity
+          - title
+
+---
+kind: Command
+version: v1
+definition:
+  name: getWikipediaArticles
+  outputType: "[WikiArticleSearchResult!]!"
+  arguments:
+    - name: query
+      type: String!
+    - name: topK
+      type: Int
+  source:
+    dataConnectorName: typescript
+    dataConnectorCommand:
+      function: getWikipediaArticles
+  graphql:
+    rootFieldName: getWikipediaArticles
+    rootFieldKind: Query
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: getWikipediaArticles
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,1 @@
+SELECT * FROM search_wiki_titles({{search_term}})

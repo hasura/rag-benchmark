@@ -1,0 +1,1 @@
+SELECT * FROM search_articles(search_term => {{search_term}})

@@ -1,0 +1,118 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: wikipedia_content
+  fields:
+    - name: content
+      type: text
+    - name: id
+      type: int4!
+    - name: title
+      type: varchar!
+  graphql:
+    typeName: wikipedia_content
+    inputTypeName: wikipedia_content_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres
+      dataConnectorObjectType: wikipedia_content
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: wikipedia_content
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - content
+          - id
+          - title
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: wikipedia_content_bool_exp
+  operand:
+    object:
+      type: wikipedia_content
+      comparableFields:
+        - fieldName: content
+          booleanExpressionType: text_bool_exp
+        - fieldName: id
+          booleanExpressionType: int4_bool_exp
+        - fieldName: title
+          booleanExpressionType: varchar_bool_exp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: wikipedia_content_bool_exp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: wikipedia_content_agg_exp
+  operand:
+    object:
+      aggregatedType: wikipedia_content
+      aggregatableFields:
+        - fieldName: content
+          aggregateExpression: text_agg_exp
+        - fieldName: id
+          aggregateExpression: int4_agg_exp
+        - fieldName: title
+          aggregateExpression: varchar_agg_exp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: wikipedia_content_agg_exp
+
+---
+kind: Model
+version: v1
+definition:
+  name: wikipedia_content
+  objectType: wikipedia_content
+  source:
+    dataConnectorName: mypostgres
+    collection: wikipedia_content
+  filterExpressionType: wikipedia_content_bool_exp
+  aggregateExpression: wikipedia_content_agg_exp
+  orderableFields:
+    - fieldName: content
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: title
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: wikipedia_content
+    selectUniques:
+      - queryRootField: wikipedia_content_by_id
+        uniqueIdentifier:
+          - id
+    orderByExpressionType: wikipedia_content_order_by
+    filterInputTypeName: wikipedia_content_filter_input
+    aggregate:
+      queryRootField: wikipedia_content_aggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: wikipedia_content
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
