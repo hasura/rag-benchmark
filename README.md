@@ -2,7 +2,7 @@
 
 ## Generating data
 
-See the script `load.py` which scrapes wiki articles and stores it in Postgres
+See the script `load.py` which scrapes wiki articles and stores it in Postgres. It uses the [FRAMES](https://huggingface.co/datasets/google/frames-benchmark) dataset available in `test.tsv`
 
 ## Comparing
 
