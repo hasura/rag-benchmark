@@ -4,6 +4,10 @@
 
 See the script `load.py` which scrapes wiki articles and stores it in Postgres. It uses the [FRAMES](https://huggingface.co/datasets/google/frames-benchmark) dataset available in `test.tsv`
 
+## Storing vectors:
+
+See `generate_and_store_embeddings.py` and `generate_and_store_embeddings_title.py`
+
 ## Comparing
 
 1. Naive RAG: `rag.py` is implementation of a naive RAG technique on top-k chunks of wikipedia articles
